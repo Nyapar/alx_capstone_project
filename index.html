@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h1>Budget Tracker</h1>
+
+    <!-- Main Menu -->
+    <nav>
+        <ul>
+            <li><a href="#view-balance">View Balance</a></li>
+            <li><a href="#add-transaction">Add Transaction</a></li>
+            <li><a href="#view-transactions">View Transactions</a></li>
+            <li><a href="#generate-reports">Generate Reports</a></li>
+            <li><a href="#display-current-balance">Display Current Balance</a></li>
+            <li><a href="#display-reports">Display Reports</a></li>
+        </ul>
+    </nav>
+
+    <!-- View Balance -->
+    <section id="view-balance">
+        <h2>View Balance</h2>
+        <p>Current Balance: ${{ current_balance }}</p>
+    </section>
+
+    <!-- Add Transaction -->
+    <section id="add-transaction">
+        <h2>Add Transaction</h2>
+        <form action="/add_transaction" method="POST">
+            <label for="description">Description:</label>
+            <input type="text" name="description" required><br>
+
+            <label for="category">Category:</label>
+            <input type="text" name="category" required><br>
+
+            <label for="amount">Amount:</label>
+            <input type="number" name="amount" step="0.01" required><br>
+
+            <input type="submit" value="Add Transaction">
+        </form>
+    </section>
+
+    <!-- View Transactions -->
+    <section id="view-transactions">
+        <h2>View Transactions</h2>
+        <ul>
+            {% for transaction in transactions %}
+            <li>{{ transaction.description }} - {{ transaction.amount }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <!-- Generate Reports -->
+    <section id="generate-reports">
+        <h2>Generate Reports</h2>
+        <!-- Include code for generating reports here -->
+    </section>
+
+    <!-- Display Current Balance -->
+    <section id="display-current-balance">
+        <h2>Display Current Balance</h2>
+        <!-- Include code for displaying the current balance here -->
+    </section>
+
+    <!-- Display Reports -->
+    <section id="display-reports">
+        <h2>Display Reports</h2>
+        <!-- Generate Reports -->
+        <section id="generate-reports">
+            <h2>Generate Reports</h2>
+            <button onclick="generateReport()">Generate Report</button>
+            <div id="report-container">
+                <!-- The report will be displayed here -->
+            </div>
+        </section>
+
+        <script>
+            function generateReport() {
+                const reportData = [
+                    { label: 'Category A', value: 250 },
+                    { label: 'Category B', value: 450 },
+                    { label: 'Category C', value: 300 },
+                ];
+
+                const reportContainer = document.getElementById('report-container');
+                reportContainer.innerHTML = '';
+
+                reportData.forEach(item => {
+                    const bar = document.createElement('div');
+                    bar.className = 'bar';
+                    bar.style.height = `${item.value}px`;
+                    bar.textContent = `${item.label}: $${item.value}`;
+                    reportContainer.appendChild(bar);
+                });
+            }
+        </script>
+
+        <style>
+            /* Basic CSS for the bar chart */
+            .bar {
+                width: 50px;
+                margin-right: 10px;
+                background-color: #3498db;
+                color: #fff;
+                text-align: center;
+                padding: 5px;
+                border-radius: 5px;
+                display: inline-block;
+            }
+        </style>
+
+    </section>
+</body>
+
+</html>
